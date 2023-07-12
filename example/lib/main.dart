@@ -7,7 +7,7 @@ external set _onUpdateCount(void Function(dynamic) function);
 
 // this is called every time the counter increases
 void onUpdateCounter(count) {
-  debugPrint(count);
+  debugPrint(count.toString());
 }
 
 void main() {
