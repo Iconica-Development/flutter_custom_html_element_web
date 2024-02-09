@@ -140,6 +140,15 @@ class _CustomHtmlElementState extends State<CustomHtmlElement>
         _key = GlobalKey();
       });
     }
+    Future.delayed(const Duration(milliseconds: 50), () {
+      if (oldWidget.width != widget.width ||
+          oldWidget.height != widget.height) {
+        _setOffset();
+        setState(() {
+          _key = GlobalKey();
+        });
+      }
+    });
 
     var delta = oldWidget.attributes.getDelta(widget.attributes);
     for (var attribute in delta.entries) {
