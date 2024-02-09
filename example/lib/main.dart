@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 160,
               height: 90.0 + increment,
               tag: 'my-counter',
+              id: 'my-id',
               // by providing the controller, the html element can update
               // every time the scroll controller updates.
               layoutObservable: controller,

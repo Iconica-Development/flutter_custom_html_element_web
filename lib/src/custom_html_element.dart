@@ -15,6 +15,7 @@ class CustomHtmlElement extends StatefulWidget {
     required this.tag,
     required this.height,
     required this.width,
+    required this.id,
     this.layoutObservable,
     this.attributes = const {},
     super.key,
@@ -25,6 +26,9 @@ class CustomHtmlElement extends StatefulWidget {
 
   /// the height of the widget;
   final double height;
+
+  // the id of the html element
+  final String id;
 
   /// The tag name of the html element
   ///
@@ -67,11 +71,15 @@ class _CustomHtmlElementState extends State<CustomHtmlElement>
 
     _internalElement.style.position = 'fixed';
     _internalElement.style.display = 'block';
+    _internalElement.id = widget.id;
     _setOffset();
 
     for (var attribute in widget.attributes.entries) {
       _internalElement.setAttribute(attribute.key, attribute.value);
     }
+
+    html.document.getElementById(widget.tag)?.replaceWith(_internalElement);
+
     html.document.querySelector('body')?.append(_internalElement);
   }
 
@@ -132,6 +140,15 @@ class _CustomHtmlElementState extends State<CustomHtmlElement>
         _key = GlobalKey();
       });
     }
+    Future.delayed(const Duration(milliseconds: 50), () {
+      if (oldWidget.width != widget.width ||
+          oldWidget.height != widget.height) {
+        _setOffset();
+        setState(() {
+          _key = GlobalKey();
+        });
+      }
+    });
 
     var delta = oldWidget.attributes.getDelta(widget.attributes);
     for (var attribute in delta.entries) {
